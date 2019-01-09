@@ -14,7 +14,7 @@ resource "google_dns_record_set" "ops-manager-dns" {
   rrdatas = ["${google_compute_address.opsman.address}"]
 }
 
-resource "google_dns_record_set" pks-api-dns" {
+resource "google_dns_record_set" "pks-api-dns" {
   name = "*.${var.pks_domain}."
   type = "A"
   ttl  = 300
