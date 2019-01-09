@@ -1,0 +1,33 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pcfnorm/rootfs
+
+inputs:
+- name: pcf-pipelines
+- name: pivnet-opsmgr
+- name: terraform-state
+
+outputs:
+- name: create-infrastructure-output
+
+params:
+  GCP_PROJECT_ID:
+  GCP_REGION:
+  GCP_SERVICE_ACCOUNT_KEY:
+  GCP_ZONE_1:
+  GCP_ZONE_2:
+  GCP_ZONE_3:
+  GCP_STORAGE_BUCKET_LOCATION:
+  GCP_RESOURCE_PREFIX:
+  PCF_DOMAIN:
+  PKS_DOMAIN:
+  PKS_SSL_NAME1:
+  PKS_SSL_CERT1:
+  PKS_SSL_KEY1:
+
+run:
+  path: pcf-pipelines/install-pks/gcp/tasks/create-infrastructure/task.sh
