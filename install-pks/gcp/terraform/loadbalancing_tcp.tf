@@ -20,10 +20,17 @@ resource "google_compute_target_pool" "pks-api" {
 }
 
 // PKS API forwarding rule
-resource "google_compute_forwarding_rule" "pks-api" {
+resource "google_compute_forwarding_rule" "pks-api1" {
   name        = "${var.prefix}-pks-api-lb"
   target      = "${google_compute_target_pool.pks-api.self_link}"
-  port_range  = "8443,9021"
+  port_range  = "8443"
+  ip_protocol = "TCP"
+  ip_address  = "${google_compute_address.pks-api.address}"
+}
+resource "google_compute_forwarding_rule" "pks-api2" {
+  name        = "${var.prefix}-pks-api-lb"
+  target      = "${google_compute_target_pool.pks-api.self_link}"
+  port_range  = "9021"
   ip_protocol = "TCP"
   ip_address  = "${google_compute_address.pks-api.address}"
 }
