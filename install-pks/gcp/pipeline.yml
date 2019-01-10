@@ -34,6 +34,15 @@ resources:
     product_version: {{opsman_major_minor_version}}
     sort_by: semver
 
+- name: pivnet-pks
+  type: pivnet
+  check_every: 24h
+  source:
+    api_token: {{pivnet_token}}
+    product_slug: pivotal-container-service
+    product_version: {{pks_major_minor_version}}
+    sort_by: semver
+
 jobs:
 - name: wipe-env
   serial_groups: [terraform]
@@ -160,6 +169,41 @@ jobs:
       params: {globs: []}
   - task: deploy-director
     file: pcf-pipelines/tasks/apply-changes/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      OPSMAN_USERNAME: {{opsman_admin_username}}
+      OPSMAN_PASSWORD: {{opsman_admin_password}}
+
+- name: upload-pks
+  serial_groups: [opsman]
+  plan:
+  - aggregate:
+    - get: pcf-pipelines
+      passed: [deploy-director]
+      trigger: true
+    - get: pivnet-product
+      resource: pivnet-pks
+      params:
+        globs:
+        - "pivotal-container-service*.pivotal"
+
+  - task: upload-tile
+    file: pcf-pipelines/tasks/upload-product-and-stemcell/task.yml
+    params:
+      OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
+      OPSMAN_CLIENT_ID: ""
+      OPSMAN_CLIENT_SECRET: ""
+      OPS_MGR_USR: {{opsman_admin_username}}
+      OPS_MGR_PWD: {{opsman_admin_password}}
+      PIVNET_API_TOKEN: {{pivnet_token}}
+      IAAS: "gcp"
+      NO_PROXY: ""
+      OM_IP: ""
+
+  - task: stage-tile
+    file: pcf-pipelines/tasks/stage-product/task.yml
     params:
       OPSMAN_DOMAIN_OR_IP_ADDRESS: {{opsman_domain_or_ip_address}}
       OPSMAN_CLIENT_ID: ""
