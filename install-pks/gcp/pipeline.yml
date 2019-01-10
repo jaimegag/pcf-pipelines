@@ -184,7 +184,7 @@ jobs:
       passed: [deploy-director]
       trigger: true
     - get: pivnet-product
-      resource: pivnet-pks
+      resource: pivnet-pks  
       params:
         globs:
         - "pivotal-container-service*.pivotal"

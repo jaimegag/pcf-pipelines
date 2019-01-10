@@ -52,3 +52,6 @@ pks_ssl_cert1:
 pks_ssl_key1:
 
 terraform_statefile_bucket: CHANGEME
+
+# PKS minor version to track
+pks_major_minor_version:
