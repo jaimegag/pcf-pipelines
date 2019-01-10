@@ -10,7 +10,7 @@ resource "google_compute_http_health_check" "pks-api" {
   unhealthy_threshold = 2
 }
 
-// TCP Router target pool
+// PKS API target pool
 resource "google_compute_target_pool" "pks-api" {
   name = "${var.prefix}-pks-api-lb"
 
@@ -19,11 +19,18 @@ resource "google_compute_target_pool" "pks-api" {
   ]
 }
 
-// PKS API forwarding rule
-resource "google_compute_forwarding_rule" "pks-api" {
-  name        = "${var.prefix}-pks-api-lb"
+// PKS API forwarding rules
+resource "google_compute_forwarding_rule" "pks-api-lb-8443" {
+  name        = "${var.prefix}-pks-api-lb-8443"
   target      = "${google_compute_target_pool.pks-api.self_link}"
-  ports       = ["8443","9021"]
+  port_range  = "8443"
+  ip_protocol = "TCP"
+  ip_address  = "${google_compute_address.pks-api.address}"
+}
+resource "google_compute_forwarding_rule" "pks-api-lb-9021" {
+  name        = "${var.prefix}-pks-api-lb-9021"
+  target      = "${google_compute_target_pool.pks-api.self_link}"
+  port_range  = "9021"
   ip_protocol = "TCP"
   ip_address  = "${google_compute_address.pks-api.address}"
 }
