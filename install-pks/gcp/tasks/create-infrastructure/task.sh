@@ -57,6 +57,6 @@ cd -
 
 echo "Please configure DNS as follows:"
 echo "----------------------------------------------------------------------------------------------"
-echo "*.${PKS_DOMAIN} == ${pub_ip_pks_api}"
+echo "*.${PKS_DOMAIN} == ${pub_ip_pks_api_lb}"
 echo "opsman.${PCF_DOMAIN} == ${pub_ip_opsman}"
 echo "----------------------------------------------------------------------------------------------"
