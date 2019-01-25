@@ -63,7 +63,8 @@ terraform destroy -force \
   -var "gcp_storage_bucket_location=dontcare" \
   -var "prefix=dontcare" \
   -var "pcf_opsman_image_name=dontcare" \
-  -var "pcf_pks_domain=dontcare" \
+  -var "pcf_domain=${PCF_DOMAIN}" \
+  -var "pks_domain=${PKS_DOMAIN}" \
   -var "pcf_pks_ssl_cert=dontcare" \
   -var "pcf_pks_ssl_key=dontcare" \
   -var "opsman_allow_cidr=dontcare" \

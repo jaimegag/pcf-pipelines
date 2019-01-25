@@ -22,6 +22,8 @@ params:
   OPSMAN_USERNAME:
   OPSMAN_PASSWORD:
   OPSMAN_ZONE:
+  PCF_DOMAIN:
+  PKS_DOMAIN:
 
 run:
   path: pcf-pipelines/install-pks/gcp/tasks/wipe-env/task.sh

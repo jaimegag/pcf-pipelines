@@ -65,6 +65,8 @@ jobs:
       OPSMAN_USERNAME: {{opsman_admin_username}}
       OPSMAN_PASSWORD: {{opsman_admin_password}}
       OPSMAN_ZONE: {{gcp_zone_1}}
+      PCF_DOMAIN: {{pcf_domain}}
+      PKS_DOMAIN: {{pks_domain}}
 
 - name: upload-opsman-image
   plan:
