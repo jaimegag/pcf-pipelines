@@ -181,10 +181,12 @@ jobs:
   plan:
   - aggregate:
     - get: pcf-pipelines
+    - get: pivnet-opsmgr
       passed: [deploy-director]
       trigger: true
+      params: {globs: []}
     - get: pivnet-product
-      resource: pivnet-pks  
+      resource: pivnet-pks
       params:
         globs:
         - "pivotal-container-service*.pivotal"
@@ -198,7 +200,7 @@ jobs:
       OPS_MGR_USR: {{opsman_admin_username}}
       OPS_MGR_PWD: {{opsman_admin_password}}
       PIVNET_API_TOKEN: {{pivnet_token}}
-      IAAS: "gcp"
+      IAAS: "google"
       NO_PROXY: ""
       OM_IP: ""
 
